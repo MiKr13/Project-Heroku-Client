@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { Button, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
@@ -16,6 +17,9 @@ const PostForm = () => {
     body: ''
   });
 
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
     variables: values,
     update(proxy, result) {
@@ -25,6 +29,8 @@ const PostForm = () => {
       data.getPosts = [result.data.createPost, ...data.getPosts];
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
       values.body = '';
+      // ...
+      forceUpdate();
     }
   });
 
