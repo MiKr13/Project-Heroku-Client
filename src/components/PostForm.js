@@ -17,9 +17,6 @@ const PostForm = () => {
     body: ''
   });
 
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
-
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
     variables: values,
     update(proxy, result) {
@@ -29,8 +26,8 @@ const PostForm = () => {
       data.getPosts = [result.data.createPost, ...data.getPosts];
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
       values.body = '';
-      // ...
-      forceUpdate();
+
+      ()=>{}
     }
   });
 
