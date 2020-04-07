@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { useForm } from '../util/hooks';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 
-const PostForm = () => {
+const PostForm = (props) => {
   
   const createPostCallback = () => {
     createPost();
@@ -26,6 +26,7 @@ const PostForm = () => {
       data.getPosts = [result.data.createPost, ...data.getPosts];
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
       values.body = '';
+      props.history.push(`/posts/${result.data.createPost._id}`);
     }
   });
 
