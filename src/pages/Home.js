@@ -11,11 +11,11 @@ function Home() {
   const { user } = useContext(AuthContext);
   const {
     loading,
-    data: { getPosts: posts }
+    data
   } = useQuery(FETCH_POSTS_QUERY);
 
-  if (posts) {
-    // const posts = data.getPosts;
+  if (data) {
+    const posts = data.getPosts;
     return (
       <Grid columns={1}>
         <Grid.Row>
