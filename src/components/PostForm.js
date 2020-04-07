@@ -4,7 +4,7 @@ import { Button, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import { useForm } from '../util/hooks';
+import { useForm, useForceUpdate } from '../util/hooks';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 
 const PostForm = () => {
@@ -26,7 +26,9 @@ const PostForm = () => {
       data.getPosts = [result.data.createPost, ...data.getPosts];
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
       values.body = '';
-      console.log(data);
+      setTimeout(() => {
+        useForceUpdate();
+      }, 600);
     }
   });
 

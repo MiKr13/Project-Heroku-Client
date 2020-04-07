@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
@@ -9,9 +9,6 @@ export const useForm = (callback, initialState = {}) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setTimeout(() => {
-      setValues({ ...values });
-    }, 500);
     callback();
   };
 
@@ -21,3 +18,12 @@ export const useForm = (callback, initialState = {}) => {
     values
   };
 };
+
+
+export const useForceUpdate = () => {
+  const [, setTick] = useState(0);
+  const update = useCallback(() => {
+    setTick(tick => tick + 1);
+  }, [])
+  return update;
+}
