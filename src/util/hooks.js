@@ -9,6 +9,9 @@ export const useForm = (callback, initialState = {}) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    setTimeout(() => {
+      setValues({ ...values });
+    }, 500);
     callback();
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Button, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
@@ -11,10 +11,6 @@ const PostForm = () => {
   
   const createPostCallback = () => {
     createPost();
-    proxy.readQuery({
-      query: FETCH_POSTS_QUERY
-    });
-
   }
 
   const { values, onChange, onSubmit } = useForm(createPostCallback, {
