@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Confirm, Icon } from 'semantic-ui-react';
@@ -7,6 +8,8 @@ import { FETCH_POSTS_QUERY } from '../util/graphql';
 import MyPopup from '../util/MyPopup';
 
 const DeleteButton = ({ postId, callback }) => {
+  const history = useHistory();
+
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const mutation = DELETE_POST_MUTATION;
@@ -20,6 +23,7 @@ const DeleteButton = ({ postId, callback }) => {
       data.getPosts = data.getPosts.filter((p) => p.id !== postId);
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
       if (callback) callback();
+      history.push(`/`);
     },
     variables: {
       postId
