@@ -7,44 +7,50 @@ import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 
-function Home() {
-  const { user } = useContext(AuthContext);
-  const {
-    loading,
-    data
-  } = useQuery(FETCH_POSTS_QUERY);
+const Home = () => {
+  try {
+    const { user } = useContext(AuthContext);
+    const {
+      loading,
+      data: { getPosts: posts }
+    } = useQuery(FETCH_POSTS_QUERY);
 
-  if (data) {
-    const posts = data.getPosts;
-    return (
-      <Grid columns={1}>
-        <Grid.Row>
-        {user && (
-            <Grid.Column>
-              <PostForm />
-            </Grid.Column>
-          )}
-        </Grid.Row>
-        <Grid.Row>
-          <h1>Recent Posts</h1>
-        </Grid.Row>
-        <Grid.Row>
-          {loading ? (
-            <h1>Loading posts..</h1>
-          ) : (
-              <Transition.Group>
-                {posts &&
-                  posts.map((post) => (
-                    <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
-                      <PostCard post={post} />
-                    </Grid.Column>
-                  ))}
-              </Transition.Group>
+    if (posts) {
+      return (
+        <Grid columns={1}>
+          <Grid.Row>
+            {user && (
+              <Grid.Column>
+                <PostForm />
+              </Grid.Column>
             )}
-        </Grid.Row>
-      </Grid>
-    );
-  } else {
+          </Grid.Row>
+          <Grid.Row>
+            <h1>Recent Posts</h1>
+          </Grid.Row>
+          <Grid.Row>
+            {loading ? (
+              <h1>Loading posts..</h1>
+            ) : (
+                <Transition.Group>
+                  {posts &&
+                    posts.map((post) => (
+                      <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
+                        <PostCard post={post} />
+                      </Grid.Column>
+                    ))}
+                </Transition.Group>
+              )}
+          </Grid.Row>
+        </Grid>
+      );
+    } else {
+      return (
+        <h1>Loading posts..</h1>
+      );
+    }
+  } catch (e) {
+    console.info(e);
     return (
       <h1>Loading posts..</h1>
     );
