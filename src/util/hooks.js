@@ -1,5 +1,14 @@
 import { useState, useCallback } from 'react';
 
+
+export const useForceUpdate = () => {
+  const [, setTick] = useState(0);
+  const update = useCallback(() => {
+    setTick(tick => tick + 1);
+  }, [])
+  return update;
+}
+
 export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 
@@ -19,11 +28,3 @@ export const useForm = (callback, initialState = {}) => {
   };
 };
 
-
-export const useForceUpdate = () => {
-  const [, setTick] = useState(0);
-  const update = useCallback(() => {
-    setTick(tick => tick + 1);
-  }, [])
-  return update;
-}
