@@ -14,7 +14,7 @@ const Home = () => {
     data
   } = useQuery(FETCH_POSTS_QUERY);
 
-  if (data.getPosts !== undefined) {
+  if (data) {
     const posts = data.getPosts;
     return (
       <Grid columns={1}>
