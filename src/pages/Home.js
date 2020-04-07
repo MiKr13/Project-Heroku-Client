@@ -50,7 +50,13 @@ const Home = () => {
       );
     }
   } catch (e) {
-    console.info(e);
+    const { user } = useContext(AuthContext);
+    const {
+      loading,
+      data: { getPosts: posts }
+    } = useQuery(FETCH_POSTS_QUERY);
+
+    console.info(e, user, loading, posts);
     return (
       <h1>Loading posts..</h1>
     );
