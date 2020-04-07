@@ -11,6 +11,10 @@ const PostForm = () => {
   
   const createPostCallback = () => {
     createPost();
+    proxy.readQuery({
+      query: FETCH_POSTS_QUERY
+    });
+
   }
 
   const { values, onChange, onSubmit } = useForm(createPostCallback, {
